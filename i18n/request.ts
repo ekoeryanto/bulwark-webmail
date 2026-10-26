@@ -55,6 +55,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
     case 'hu':
       messages = (await import('../locales/hu/common.json')).default;
       break;
+    case 'id':
+      messages = (await import('../locales/id/common.json')).default;
+      break;
     case 'it':
       messages = (await import('../locales/it/common.json')).default;
       break;
@@ -115,7 +118,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   return {
     locale,
     messages,
-    timeZone: 'Europe/Paris',
+    timeZone: locale === 'id' ? 'Asia/Jakarta' : 'Europe/Paris',
     now: new Date()
   };
 });

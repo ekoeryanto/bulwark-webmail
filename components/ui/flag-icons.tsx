@@ -70,6 +70,15 @@ function FlagHU(props: FlagProps) {
   return <Flag {...props}><path fill="#EEE" d="M0 14h36v8H0z" /><path fill="#CD2A3E" d="M32 5H4C1.791 5 0 6.791 0 9v5h36V9c0-2.209-1.791-4-4-4z" /><path fill="#436F4D" d="M4 31h28c2.209 0 4-1.791 4-4v-5H0v5c0 2.209 1.791 4 4 4z" /></Flag>;
 }
 
+function FlagID(props: FlagProps) {
+  return (
+    <Flag {...props}>
+      <path fill="#DA251D" d="M32 5H4C1.791 5 0 6.791 0 9v9h36V9c0-2.209-1.791-4-4-4z" />
+      <path fill="#EEE" d="M4 31h28c2.209 0 4-1.791 4-4v-9H0v9c0 2.209 1.791 4 4 4z" />
+    </Flag>
+  );
+}
+
 function FlagLV(props: FlagProps) {
   return <Flag {...props}><path fill="#9E3039" d="M32 5H4C1.791 5 0 6.791 0 9v6h36V9c0-2.209-1.791-4-4-4zm0 26H4c-2.209 0-4-1.791-4-4v-6h36v6c0 2.209-1.791 4-4 4z" /><path fill="#EEE" d="M0 15h36v6H0z" /></Flag>;
 }
@@ -144,6 +153,7 @@ export const flagComponents: Record<string, (props: FlagProps) => ReactElement> 
   et: FlagEE,
   fr: FlagFR,
   he: FlagIL,
+  id: FlagID,
   it: FlagIT,
   hu: FlagHU,
   lv: FlagLV,

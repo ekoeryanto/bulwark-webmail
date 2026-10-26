@@ -22,7 +22,7 @@ const envDefaultLocale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE?.trim();
 const resolvedDefaultLocale =
   envDefaultLocale && (SUPPORTED_LOCALES as readonly string[]).includes(envDefaultLocale)
     ? (envDefaultLocale as (typeof SUPPORTED_LOCALES)[number])
-    : 'id';
+    : 'en';
 
 export const routing = defineRouting({
   locales: SUPPORTED_LOCALES,

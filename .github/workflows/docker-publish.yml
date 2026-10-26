@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - tirtapatriot
     paths:
       - "Dockerfile"
       - ".dockerignore"

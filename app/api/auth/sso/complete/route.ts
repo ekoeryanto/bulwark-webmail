@@ -9,6 +9,7 @@ import {
   hasClientSecret,
 } from '@/lib/oauth/token-exchange';
 import { buildRedeemBundle } from '@/lib/auth/pair-bundle';
+import { mintStalwartToken } from '@/lib/auth/stalwart-token-bridge';
 import { refreshTokenCookieName, refreshTokenServerCookieName } from '@/lib/oauth/tokens';
 import { getCookieOptions } from '@/lib/oauth/cookie-config';
 import { storeIdToken } from '@/lib/oauth/end-session';
@@ -104,7 +105,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Exchange code for tokens
-    const tokens = await exchangeCodeForTokens(code, codeVerifier, redirectUri, pendingServerId);
+    let tokens = await exchangeCodeForTokens(code, codeVerifier, redirectUri, pendingServerId);
+    tokens = await mintStalwartToken(tokens);
 
     // For the mobile handoff flow the tokens are handed back to the app
     // verbatim - we deliberately don't write any cookies on the webmail

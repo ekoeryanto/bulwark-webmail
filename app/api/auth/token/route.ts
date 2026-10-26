@@ -29,6 +29,7 @@ import {
 } from '@/lib/oauth/end-session';
 import { MAX_ACCOUNT_SLOTS } from '@/lib/account-utils';
 import { rejectCrossOriginRequest } from '@/lib/security/same-origin';
+import { mintStalwartToken } from '@/lib/auth/stalwart-token-bridge';
 
 function parseSlot(raw: string | null): number | null {
   if (raw === null) return null;
@@ -140,7 +141,8 @@ export async function POST(request: NextRequest) {
     const slot = typeof bodySlot === 'number' && bodySlot >= 0 && bodySlot < MAX_ACCOUNT_SLOTS ? bodySlot : getSlot(request);
     const serverId = typeof bodyServerId === 'string' && bodyServerId ? bodyServerId : null;
 
-    const tokens = await exchangeCodeForTokens(code, code_verifier, redirect_uri, serverId);
+    let tokens = await exchangeCodeForTokens(code, code_verifier, redirect_uri, serverId);
+    tokens = await mintStalwartToken(tokens);
 
     const response = NextResponse.json({
       access_token: tokens.access_token,
@@ -242,7 +244,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Token endpoint unavailable' }, { status: 503 });
     }
 
-    const tokens = await tokenResponse.json();
+    let tokens = await tokenResponse.json();
+    tokens = await mintStalwartToken(tokens);
 
     if (!tokens.access_token) {
       logger.error('Refresh response missing access_token', { response: JSON.stringify(tokens).substring(0, 500) });
